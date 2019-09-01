@@ -10,21 +10,21 @@ import datetime
 import smtplib
 from email.mime.multipart import MIMEMultipart
 
+TICKET_TYPE = 1
+
 browser = webdriver.Chrome(executable_path='chromedriver')
-
-
-#Setting ticket types paths
-return_ticket = "//label[@id='flight-type-roundtrip-label-hp-flight']"
-one_way_ticket = "//label[id='flight-type-one-way-label-hp-flight']"
-multi_ticket = "//label[@id='flight-type-multi-dest-label-hp-flight']"
 
 #Scraper functions
 def ticket_chooser(ticket):
-
-	try:
-		ticket_type = browser.find_element_by_xpath(ticket)
-		ticket_type.click()
-	except Exception as e:
+	if ticket == 1:
+		print(ticket)
+		try:
+			ticket_type = browser.find_element_by_xpath("//*[@id='flt-app']/div[2]/main[1]/div[3]/div/div[3]/div/div[1]/div[1]/dropdown-menu/div/div[1]")
+			ticket_type.click()
+		except Exception as e:
+			print("Error finding flight type element")
+			pass
+	else:
 		pass
 
 def dep_country_chooser(dep_country):
@@ -172,47 +172,43 @@ df = pandas.DataFrame()
 username = 'wlmisback@gmail.com'
 password = 'Blu3Fi$h123'
 
-for i in range(8):
-	link = 'https://www.expedia.com/'
-	browser.get(link)
-	time.sleep(5)
 
-	 #choose flights only
-	flights_only = browser.find_element_by_xpath("//button[@id='tab-flight-tab-hp']")
-	flights_only.click()
+link = 'https://www.google.com/flights?hl=en'
+browser.get(link)
+time.sleep(5)
 
-	ticket_chooser(return_ticket)
+ticket_chooser(TICKET_TYPE)
 
-	dep_country_chooser('Pittsburgh')
+# dep_country_chooser('Pittsburgh')
 
-	arrival_country_chooser('Rome')
+# arrival_country_chooser('Rome')
 
-	dep_date_chooser('09', '29', '2019')
+# dep_date_chooser('09', '29', '2019')
 
-	return_date_chooser('10', '15', '2019')
+# return_date_chooser('10', '15', '2019')
 
-	search()
+# search()
 
-	compile_data()
+# compile_data()
 
-	#save values for email
-	current_values = df.iloc[0]
+# #save values for email
+# current_values = df.iloc[0]
 
-	cheapest_dep_time = current_values[0]
-	cheapest_arrival_time = current_values[1]
-	cheapest_airline = current_values[2]
-	cheapest_duration = current_values[3]
-	cheapest_stops = current_values[4]
-	cheapest_price = current_values[-1]
+# cheapest_dep_time = current_values[0]
+# cheapest_arrival_time = current_values[1]
+# cheapest_airline = current_values[2]
+# cheapest_duration = current_values[3]
+# cheapest_stops = current_values[4]
+# cheapest_price = current_values[-1]
 
 
-	print('run {} completed!'.format(i))
+# print('run {} completed!'.format(i))
 
-	create_msg()
-	connect_mail(username,password)
-	send_email(msg)
-	print('Email sent!')
+# create_msg()
+# connect_mail(username,password)
+# send_email(msg)
+# print('Email sent!')
 
-	df.to_excel('C:/Users/wlmis/Desktop/GitHub/flights/flights.xlsx')
+# df.to_excel('C:/Users/wlmis/Desktop/GitHub/flights/flights.xlsx')
 
-	time.sleep(3600)
+# time.sleep(3600)

@@ -183,13 +183,13 @@ for i in range(8):
 
 	ticket_chooser(return_ticket)
 
-	dep_country_chooser('New York')
+	dep_country_chooser('Pittsburgh')
 
-	arrival_country_chooser('Madrid')
+	arrival_country_chooser('Rome')
 
-	dep_date_chooser('08', '30', '2019')
+	dep_date_chooser('09', '29', '2019')
 
-	return_date_chooser('09', '09', '2019')
+	return_date_chooser('10', '15', '2019')
 
 	search()
 
