@@ -19,8 +19,12 @@ def ticket_chooser(ticket):
 	if ticket == 1:
 		print(ticket)
 		try:
-			ticket_type = browser.find_element_by_xpath("//*[@id='flt-app']/div[2]/main[1]/div[3]/div/div[3]/div/div[1]/div[1]/dropdown-menu/div/div[1]")
+			ticket_menu = browser.find_element_by_xpath("//*[@id='flt-app']/div[2]/main[1]/div[3]/div/div[3]/div/div[1]/div[1]/dropdown-menu/div/div[1]")
+			ticket_menu.click()
+			time.sleep(1)
+			ticket_type = browser.find_element_by_xpath("//*[@id='flt-app']/div[2]/main[1]/div[3]/div/div[3]/div/div[1]/div[1]/dropdown-menu/div/div[2]/menu-item[2]") 
 			ticket_type.click()
+
 		except Exception as e:
 			print("Error finding flight type element")
 			pass
@@ -28,34 +32,41 @@ def ticket_chooser(ticket):
 		pass
 
 def dep_country_chooser(dep_country):
-	fly_from = browser.find_element_by_xpath("//input[@id='flight-origin-hp-flight']")
-	time.sleep(1)
+	fly_from = browser.find_element_by_xpath("//*[@id='flt-app']/div[2]/main[1]/div[3]/div/div[3]/div/div[2]/div[1]")
+	fly_from.click()
+	fly_from = browser.find_element_by_xpath("//*[@id='sb_ifc50']/input")
 	fly_from.clear()
 	time.sleep(1.5)
 	fly_from.send_keys('  ' + dep_country)
 	time.sleep(1.5)
-	first_item = browser.find_element_by_xpath("//a[@id='aria-option-0']")
+	first_item = browser.find_element_by_xpath("//*[@id='sbse0']/div[1]/div[1]/span[1]")
 	time.sleep(1.5)
 	first_item.click()
+	time.sleep(1)
 
 def arrival_country_chooser(arrival_country):
-	fly_to = browser.find_element_by_xpath("//input[@id='flight-destination-hp-flight']")
-	time.sleep(1)
+	fly_to = browser.find_element_by_xpath("//*[@id='flt-app']/div[2]/main[1]/div[3]/div/div[3]/div/div[2]/div[2]")
+	fly_to.click()
+	fly_to = browser.find_element_by_xpath("//*[@id='sb_ifc50']/input")
 	fly_to.clear()
 	time.sleep(1.5)
 	fly_to.send_keys(' ' + arrival_country)
 	time.sleep(1.5)
-	first_item = browser.find_element_by_xpath("//a[@id='aria-option-0']")
+	first_item = browser.find_element_by_xpath("//*[@id='sbse0']/div[1]")
 	time.sleep(1.5)
 	first_item.click()
+	time.sleep(1)
 
 def dep_date_chooser(month, day, year):
-	dep_date_button = browser.find_element_by_xpath("//input[@id='flight-departing-hp-flight']")
-	dep_date_button.clear()
+	dep_date_button = browser.find_element_by_xpath("//*[@id='flt-app']/div[2]/main[1]/div[3]/div/div[3]/div/div[2]/div[4]/div[1]/div[2]/span")
+	dep_date_button.click()
+	time.sleep(1)
+	dep_date_button = browser.find_element_by_xpath("//*[@id='flt-modaldialog']/div/div[4]/div[2]/div[1]/date-input/input")
+	dep_date_button.send_keys(Keys.BACKSPACE)
 	dep_date_button.send_keys(month + '/' + day + '/' + year)
 
 def return_date_chooser(month, day, year):
-	return_date_button = browser.find_element_by_xpath("//input[@id='flight-returning-hp-flight']")
+	return_date_button = browser.find_element_by_xpath("//*[@id='flt-modaldialog']/div/div[4]/div[2]/div[3]/date-input/input")
 	
 	for i in range(11):
 		return_date_button.send_keys(Keys.BACKSPACE)
@@ -63,9 +74,9 @@ def return_date_chooser(month, day, year):
 	return_date_button.send_keys(Keys.ESCAPE)
 
 def search():
-	search = browser.find_element_by_xpath("//button[@class='btn-primary btn-action gcw-submit']")
+	search = browser.find_element_by_xpath("//*[@id='flt-modaldialog']/div/div[5]/g-raised-button")
 	search.click()
-	time.sleep(15)
+	time.sleep(10)
 	print('Results ready!')
 
 #DataFrame functions
@@ -168,7 +179,7 @@ def send_email(msg):
 
 df = pandas.DataFrame()
 
-#email credentials
+# Email Credentials
 username = 'wlmisback@gmail.com'
 password = 'Blu3Fi$h123'
 
@@ -177,17 +188,24 @@ link = 'https://www.google.com/flights?hl=en'
 browser.get(link)
 time.sleep(5)
 
+# Chooses ticket type
 ticket_chooser(TICKET_TYPE)
 
-# dep_country_chooser('Pittsburgh')
+# Chooses departing country
+dep_country_chooser('Pittsburgh')
 
-# arrival_country_chooser('Rome')
+# Chooses arriving country
+arrival_country_chooser('Rome')
 
-# dep_date_chooser('09', '29', '2019')
+# Chooses departing date
+dep_date_chooser('09', '29', '2019')
 
-# return_date_chooser('10', '15', '2019')
+# Chooses return date if ticket is roundtrip
+if (TICKET_TYPE == 0):
+	return_date_chooser('10', '15', '2019')
 
-# search()
+# Searches for results
+search()
 
 # compile_data()
 
