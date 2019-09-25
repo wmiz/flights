@@ -32,7 +32,7 @@ def ticket_chooser(ticket):
 		pass
 
 def dep_country_chooser(dep_country):
-	fly_from = browser.find_element_by_xpath("//*[@id='flt-app']/div[2]/main[1]/div[3]/div/div[3]/div/div[2]/div[1]")
+	fly_from = browser.find_element_by_xpath("//*[@id='flt-app']/div[2]/main[1]/div[4]/div/div[3]/div/div[2]/div[1]")
 	fly_from.click()
 	fly_from = browser.find_element_by_xpath("//*[@id='sb_ifc50']/input")
 	fly_from.clear()
@@ -45,7 +45,7 @@ def dep_country_chooser(dep_country):
 	time.sleep(1)
 
 def arrival_country_chooser(arrival_country):
-	fly_to = browser.find_element_by_xpath("//*[@id='flt-app']/div[2]/main[1]/div[3]/div/div[3]/div/div[2]/div[2]")
+	fly_to = browser.find_element_by_xpath("//*[@id='flt-app']/div[2]/main[1]/div[4]/div/div[3]/div/div[2]/div[2]")
 	fly_to.click()
 	fly_to = browser.find_element_by_xpath("//*[@id='sb_ifc50']/input")
 	fly_to.clear()
@@ -58,7 +58,7 @@ def arrival_country_chooser(arrival_country):
 	time.sleep(1)
 
 def dep_date_chooser(month, day, year):
-	dep_date_button = browser.find_element_by_xpath("//*[@id='flt-app']/div[2]/main[1]/div[3]/div/div[3]/div/div[2]/div[4]/div[1]/div[2]/span")
+	dep_date_button = browser.find_element_by_xpath("//*[@id='flt-app']/div[2]/main[1]/div[4]/div/div[3]/div/div[2]/div[4]/div[1]/div[2]")
 	dep_date_button.click()
 	time.sleep(1)
 	dep_date_button = browser.find_element_by_xpath("//*[@id='flt-modaldialog']/div/div[4]/div[2]/div[1]/date-input/input")
@@ -198,7 +198,7 @@ dep_country_chooser('Pittsburgh')
 arrival_country_chooser('Rome')
 
 # Chooses departing date
-dep_date_chooser('09', '29', '2019')
+dep_date_chooser('10', '01', '2019')
 
 # Chooses return date if ticket is roundtrip
 if (TICKET_TYPE == 0):
