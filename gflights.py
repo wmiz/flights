@@ -19,10 +19,10 @@ def ticket_chooser(ticket):
 	if ticket == 1:
 		print(ticket)
 		try:
-			ticket_menu = browser.find_element_by_xpath("//*[@id='flt-app']/div[2]/main[1]/div[3]/div/div[3]/div/div[1]/div[1]/dropdown-menu/div/div[1]")
+			ticket_menu = browser.find_element_by_xpath("//*[@id='flt-app']/div[2]/main[1]/div[4]/div/div[3]/div/div[1]/div[1]/dropdown-menu/div/div[1]/span[1]")
 			ticket_menu.click()
 			time.sleep(1)
-			ticket_type = browser.find_element_by_xpath("//*[@id='flt-app']/div[2]/main[1]/div[3]/div/div[3]/div/div[1]/div[1]/dropdown-menu/div/div[2]/menu-item[2]") 
+			ticket_type = browser.find_element_by_xpath("//*[@id='flt-app']/div[2]/main[1]/div[4]/div/div[3]/div/div[1]/div[1]/dropdown-menu/div/div[2]/menu-item[2]/span") 
 			ticket_type.click()
 
 		except Exception as e:
