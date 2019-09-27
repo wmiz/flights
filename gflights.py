@@ -91,7 +91,7 @@ def compile_data():
 	global layovers_list
 
 	#departure times
-	dep_times = browser.find_elements_by_xpath("//span[@data-test-id='departure-time']")
+	dep_time = browser.find_element_by_xpath("//span[@data-test-id='departure-time']")
 	dep_times_list = [value.text for value in dep_times]
 
 	#arrival times
@@ -183,9 +183,10 @@ df = pandas.DataFrame()
 username = 'wlmisback@gmail.com'
 password = 'Blu3Fi$h123'
 
-
 link = 'https://www.google.com/flights?hl=en'
 browser.get(link)
+#Delete webdriver cookies
+browser.delete_all_cookies()
 time.sleep(5)
 
 # Chooses ticket type
