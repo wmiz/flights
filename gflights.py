@@ -1,28 +1,46 @@
+# Webdriver
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 
-import pandas
-
+# Time
 import time
 import datetime
 
+# Email
 import smtplib
 from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 
+# Flight class
+from flight import Flight
+
+DEP_CITY = "Pittsburgh"
+ARR_CITY = "Rome"
+DEP_DATE = "10/01/2019"
+RETURN_DATE = "10/15/2019"
 TICKET_TYPE = 1
 
-browser = webdriver.Chrome(executable_path='chromedriver')
+# Email Credentials
+USERNAME = 'wlmisback@gmail.com'
+PASSWORD = 'Blu3Fi$h123'
+
+#Currency Conversion
+from forex_python.converter import CurrencyRates
+
 
 #Scraper functions
 def ticket_chooser(ticket):
 	if ticket == 1:
-		print(ticket)
 		try:
-			ticket_menu = browser.find_element_by_xpath("//*[@id='flt-app']/div[2]/main[1]/div[4]/div/div[3]/div/div[1]/div[1]/dropdown-menu/div/div[1]/span[1]")
+			ticket_menu = browser.find_element_by_xpath("""//*[@id='flt-app']
+				/div[2]/main[1]/div[4]/div/div[3]/div/div[1]/div[1]
+				/dropdown-menu/div/div[1]/span[1]""")
 			ticket_menu.click()
 			time.sleep(1)
-			ticket_type = browser.find_element_by_xpath("//*[@id='flt-app']/div[2]/main[1]/div[4]/div/div[3]/div/div[1]/div[1]/dropdown-menu/div/div[2]/menu-item[2]/span") 
+			ticket_type = browser.find_element_by_xpath("""//*[@id='flt-app']
+				/div[2]/main[1]/div[4]/div/div[3]/div/div[1]/div[1]
+				/dropdown-menu/div/div[2]/menu-item[2]/span""") 
 			ticket_type.click()
 
 		except Exception as e:
@@ -31,26 +49,29 @@ def ticket_chooser(ticket):
 	else:
 		pass
 
-def dep_country_chooser(dep_country):
-	fly_from = browser.find_element_by_xpath("//*[@id='flt-app']/div[2]/main[1]/div[4]/div/div[3]/div/div[2]/div[1]")
+def dep_city_chooser(dep_city):
+	fly_from = browser.find_element_by_xpath("""//*[@id='flt-app']/div[2]
+		/main[1]/div[4]/div/div[3]/div/div[2]/div[1]""")
 	fly_from.click()
 	fly_from = browser.find_element_by_xpath("//*[@id='sb_ifc50']/input")
 	fly_from.clear()
 	time.sleep(1.5)
-	fly_from.send_keys('  ' + dep_country)
+	fly_from.send_keys('  ' + dep_city)
 	time.sleep(1.5)
-	first_item = browser.find_element_by_xpath("//*[@id='sbse0']/div[1]/div[1]/span[1]")
+	first_item = browser.find_element_by_xpath("""//*[@id='sbse0']/div[1]
+		/div[1]/span[1]""")
 	time.sleep(1.5)
 	first_item.click()
 	time.sleep(1)
 
-def arrival_country_chooser(arrival_country):
-	fly_to = browser.find_element_by_xpath("//*[@id='flt-app']/div[2]/main[1]/div[4]/div/div[3]/div/div[2]/div[2]")
+def arrival_city_chooser(arrival_city):
+	fly_to = browser.find_element_by_xpath("""//*[@id='flt-app']/div[2]
+		/main[1]/div[4]/div/div[3]/div/div[2]/div[2]""")
 	fly_to.click()
 	fly_to = browser.find_element_by_xpath("//*[@id='sb_ifc50']/input")
 	fly_to.clear()
 	time.sleep(1.5)
-	fly_to.send_keys(' ' + arrival_country)
+	fly_to.send_keys(' ' + arrival_city)
 	time.sleep(1.5)
 	first_item = browser.find_element_by_xpath("//*[@id='sbse0']/div[1]")
 	time.sleep(1.5)
@@ -58,15 +79,18 @@ def arrival_country_chooser(arrival_country):
 	time.sleep(1)
 
 def dep_date_chooser(month, day, year):
-	dep_date_button = browser.find_element_by_xpath("//*[@id='flt-app']/div[2]/main[1]/div[4]/div/div[3]/div/div[2]/div[4]/div[1]/div[2]")
+	dep_date_button = browser.find_element_by_xpath("""//*[@id='flt-app']
+		/div[2]/main[1]/div[4]/div/div[3]/div/div[2]/div[4]/div[1]/div[2]""")
 	dep_date_button.click()
 	time.sleep(1)
-	dep_date_button = browser.find_element_by_xpath("//*[@id='flt-modaldialog']/div/div[4]/div[2]/div[1]/date-input/input")
+	dep_date_button = browser.find_element_by_xpath("""//*
+		[@id='flt-modaldialog']/div/div[4]/div[2]/div[1]/date-input/input""")
 	dep_date_button.send_keys(Keys.BACKSPACE)
 	dep_date_button.send_keys(month + '/' + day + '/' + year)
 
 def return_date_chooser(month, day, year):
-	return_date_button = browser.find_element_by_xpath("//*[@id='flt-modaldialog']/div/div[4]/div[2]/div[3]/date-input/input")
+	return_date_button = browser.find_element_by_xpath("""//*
+		[@id='flt-modaldialog']/div/div[4]/div[2]/div[3]/date-input/input""")
 	
 	for i in range(11):
 		return_date_button.send_keys(Keys.BACKSPACE)
@@ -74,160 +98,120 @@ def return_date_chooser(month, day, year):
 	return_date_button.send_keys(Keys.ESCAPE)
 
 def search():
-	search = browser.find_element_by_xpath("//*[@id='flt-modaldialog']/div/div[5]/g-raised-button")
+	search = browser.find_element_by_xpath("""//*[@id='flt-modaldialog']/div
+		/div[5]/g-raised-button""")
 	search.click()
 	time.sleep(10)
 	print('Results ready!')
 
-#DataFrame functions
-def compile_data():
-	global df
-	global dep_times_list
-	global arr_times_list
-	global airlines_list
-	global price_list
-	global durations_list
-	global stops_list
-	global layovers_list
 
-	#departure times
-	dep_time = browser.find_element_by_xpath("//span[@data-test-id='departure-time']")
-	dep_times_list = [value.text for value in dep_times]
-
-	#arrival times
-	arr_times = browser.find_elements_by_xpath("//span[@data-test-id='arrival-time']")
-	arr_times_list = [value.text for value in arr_times]
-
-	#prices
-	prices = browser.find_elements_by_xpath("//span[@data-test-id='listing-price-dollars']")
-	price_list = [value.text for value in prices]
-
-	#durations
-	durations = browser.find_elements_by_xpath("//span[@data-test-id='duration']")
-	durations_list = [value.text for value in durations]
-
-	#stops
-	stops = browser.find_elements_by_xpath("//span[@class='number-stops']")
-	stops_list = [value.text for value in stops]
-
-	#layovers
-	layovers = browser.find_elements_by_xpath("//span[@data-test-id='layover-airport-stops']")
-	layovers_list = [value.text for value in layovers]
-
-	now = datetime.datetime.now()
-	current_date = (str(now.year) + '-' + str(now.month) + "-" + str(now.day))
-	current_time = (str(now.hour) + ':' + str(now.minute))
-	current_price = 'price' + '(' + current_date + '---' + current_time + ')'
-
-	for i in range(len(dep_times_list)):
-		try:
-			df.loc[i, 'departure_time'] = dep_times_list[i]
-		except Exception as e:
-			pass
-		try:
-			df.loc[i, 'arrival_time'] = arr_times_list[i]
-		except Exception as e:
-			pass
-		try:
-			df.loc[i, 'airline'] = airlines_list[i]
-		except Exception as e:
-			pass
-		try:
-			df.loc[i, 'duration'] = durations_list[i]
-		except Exception as e:
-			pass
-		try:
-			df.loc[i, 'stops'] = stops_list[i]
-		except Exception as e:
-			pass
-		try:
-			df.loc[i, 'layovers'] = layovers_list[i]
-		except Exception as e:
-			pass
-		try:
-			df.loc[i, str(current_price)] = price_list[i]
-		except Exception as e:
-			pass
-	print('Excel Sheet Created!')
-
-#email functions
+# Email functions
 def connect_mail(username, password):
-	global server 
 	server = smtplib.SMTP('smtp.gmail.com', 587)
 	server.ehlo()
 	server.starttls()
 	server.login(username, password)
 
-#Create message template for email
-def create_msg():
-	global msg
-	msg = '\nCurrent Cheapest flight:\n\nDeparture time: {}\nArrival time: {}\nAirline: {}\nFlight duration: {}\nNo. of stops: {}\nPrice: {}\n'.format(cheapest_dep_time,
-		   cheapest_arrival_time,
-		   cheapest_airline,
-		   cheapest_duration,
-		   cheapest_stops,
-		   cheapest_price)
+	return server
 
-def send_email(msg):
-	global message
+# Create message template for email
+def create_msg(flight):
+	msg = """Departure time: {}\nArrival time: {}\nAirline: {}
+	\nFlight duration: {}\nNo. of stops: {}\n
+	Price: {}\n""".format(flight.getDep(),
+		   flight.getArr(),
+		   flight.getAirline(),
+		   flight.getDuration(),
+		   flight.getStops(),
+		   flight.getPrice())
+	return msg
+
+def send_email(msg, server, flight):
 	message = MIMEMultipart()
-	message['Subject'] = 'Current Best flight'
+	message['Subject'] = flight.getName()
 	message['From'] = 'wlmisback@gmail.com'
-	message['to'] = 'wlmisback@gmail.com'
+	message['To'] = 'wlmisback@gmail.com'
+	message.attach(MIMEText(msg, 'plain'))
 
-	server.sendmail('wlmisback@gmail.com', 'wlmisback@gmail.com', msg)
+	server.sendmail('wlmisback@gmail.com', 'wlmisback@gmail.com', 
+		message.as_string())
 
-df = pandas.DataFrame()
 
-# Email Credentials
-username = 'wlmisback@gmail.com'
-password = 'Blu3Fi$h123'
 
-link = 'https://www.google.com/flights?hl=en'
-browser.get(link)
+#Create webdriver
+browser = webdriver.Chrome(executable_path='chromedriver')
+
+#Set up search
 #Delete webdriver cookies
 browser.delete_all_cookies()
+link = 'https://www.google.com/flights?hl=en'
+browser.get(link)
 time.sleep(5)
 
-# Chooses ticket type
+# Set params for search
 ticket_chooser(TICKET_TYPE)
-
-# Chooses departing country
-dep_country_chooser('Pittsburgh')
-
-# Chooses arriving country
-arrival_country_chooser('Rome')
-
-# Chooses departing date
-dep_date_chooser('10', '01', '2019')
-
-# Chooses return date if ticket is roundtrip
+dep_city_chooser(DEP_CITY)
+arrival_city_chooser(ARR_CITY)
+dep_date_params = DEP_DATE.split('/')
+dep_date_chooser(dep_date_params[0], dep_date_params[1], dep_date_params[2])
 if (TICKET_TYPE == 0):
-	return_date_chooser('10', '15', '2019')
+	ret_date_params = RETURN_DATE.split('/')
+	return_date_chooser(ret_date_params[0], ret_date_params[1], 
+		ret_date_params[2])
 
-# Searches for results
+# Do Search
 search()
 
-# compile_data()
+# Create new flight object from seach
+flight = Flight(DEP_CITY + " | " + ARR_CITY + " | " + DEP_DATE + " | " 
+	+ RETURN_DATE)
+flight.setDepCity(DEP_CITY)
+flight.setArrCity(ARR_CITY)
 
-# #save values for email
-# current_values = df.iloc[0]
+# Set flight object variables
+# Departure time
+flight.setDep(browser.find_element_by_xpath("""//*[@id='flt-app']/div[2]/main[4]
+	/div[7]/div[1]/div[5]/div[1]/ol/li[1]/div/div[1]/div[2]/div[1]/div[1]/div[2]
+	/div[1]/div/span[1]/span/span""").text)
 
-# cheapest_dep_time = current_values[0]
-# cheapest_arrival_time = current_values[1]
-# cheapest_airline = current_values[2]
-# cheapest_duration = current_values[3]
-# cheapest_stops = current_values[4]
-# cheapest_price = current_values[-1]
+# Arrival time
+flight.setArr(browser.find_element_by_xpath("""//*[@id='flt-app']/div[2]
+	/main[4]/div[7]/div[1]/div[5]/div[1]/ol/li[1]/div/div[1]/div[2]/div[1]
+	/div[1]/div[2]/div[1]/div/span[2]/span/span[1]""").text)
 
+# Convert price then add to flight
+EUR_price = (browser.find_element_by_xpath("""//*[@id='flt-app']/div[2]
+	/main[4]/div[7]/div[1]/div[5]/div[1]/ol/li[1]/div/div[1]/div[2]/div[1]
+	/div[1]/div[5]/div""").text)[1:]
 
-# print('run {} completed!'.format(i))
+c = CurrencyRates()
+USD_price = str(round(c.convert('EUR', 'USD', int(EUR_price)), 2))
 
-# create_msg()
-# connect_mail(username,password)
-# send_email(msg)
-# print('Email sent!')
+flight.setPrice("$" + USD_price)
 
-# df.to_excel('C:/Users/wlmis/Desktop/GitHub/flights/flights.xlsx')
+# Duration
+flight.setDuration(browser.find_element_by_xpath("""//*[@id='flt-app']/div[2]
+	/main[4]/div[7]/div[1]/div[5]/div[1]/ol/li[1]/div/div[1]/div[2]/div[1]
+	/div[1]/div[3]/div[1]""").text)
+
+# Stops
+flight.setStops(browser.find_element_by_xpath("""//*[@id='flt-app']/div[2]
+	/main[4]/div[7]/div[1]/div[5]/div[1]/ol/li[1]/div/div[1]/div[2]/div[1]
+	/div[1]/div[4]/div[1]/div/div/span""").text)
+
+# Airline(s)
+flight.setAirline(browser.find_element_by_xpath("""//*[@id="flt-app"]/div[2]
+	/main[4]/div[7]/div[1]/div[5]/div[1]/ol/li[1]/div/div[1]/div[2]/div[1]
+	/div[1]/div[2]/div[2]/span[2]/span/span/span/span/span""").text)
+
+now = datetime.datetime.now()
+current_date = (str(now.year) + '-' + str(now.month) + "-" + str(now.day))
+current_time = (str(now.hour) + ':' + str(now.minute))
+current_price = 'price' + '(' + current_date + '---' + current_time + ')'
+
+msg = create_msg(flight)
+server = connect_mail(USERNAME,PASSWORD)
+send_email(msg, server, flight)
+print('Email sent!')
 
 # time.sleep(3600)
