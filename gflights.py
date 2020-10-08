@@ -3,6 +3,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import StaleElementReferenceException
 
 # Time
 import time
@@ -16,9 +17,12 @@ from email.mime.text import MIMEText
 # Flight class
 from flight import Flight
 
-DEP_CITY = "Pittsburgh"
-ARR_CITY = "Rome"
-DEP_DATE = "10-23-2020"
+import sys, re, random
+
+DEP_CITY = re.search(r"\w+", sys.argv[1]).group()
+ARR_CITY = re.search(r"\w+", sys.argv[2]).group()
+DEP_MONTH = re.search(r"--(\w+-\w+)", sys.argv[3]).group().split("-")
+DEP_DATE = DEP_MONTH[2] + "-01-" + DEP_MONTH[3]
 RETURN_DATE = "10-30-2020"
 TICKET_TYPE = 1
 
@@ -48,20 +52,22 @@ def ticket_chooser(ticket):
 	else:
 		pass
 
+def sleep(max_seconds):
+	time.sleep(random.uniform(0, max_seconds))
+
 def dep_city_chooser(dep_city):
-	fly_from = browser.find_element_by_xpath("""//*[@id='flt-app']/div[2]
-		/main[1]/div[4]/div/div[3]/div/div[2]/div[1]""")
+	fly_from = browser.find_element_by_xpath("""//*[@id="flt-app"]/div[2]/main[1]/div[4]/div/div[3]/div/div[2]/div[1]""")
 	fly_from.click()
 	fly_from = browser.find_element_by_xpath("//*[@id='sb_ifc50']/input")
 	fly_from.clear()
-	time.sleep(1.5)
+	sleep(1)
 	fly_from.send_keys('  ' + dep_city)
-	time.sleep(1.5)
+	sleep(1)
 	first_item = browser.find_element_by_xpath("""//*[@id='sbse0']/div[1]
 		/div[1]/span[1]""")
-	time.sleep(1.5)
+	sleep(1)
 	first_item.click()
-	time.sleep(1)
+	sleep(1)
 
 def arrival_city_chooser(arrival_city):
 	fly_to = browser.find_element_by_xpath("""//*[@id='flt-app']/div[2]
@@ -69,23 +75,37 @@ def arrival_city_chooser(arrival_city):
 	fly_to.click()
 	fly_to = browser.find_element_by_xpath("//*[@id='sb_ifc50']/input")
 	fly_to.clear()
-	time.sleep(1.5)
+	sleep(1)
 	fly_to.send_keys(' ' + arrival_city)
-	time.sleep(1.5)
+	sleep(1)
 	first_item = browser.find_element_by_xpath("//*[@id='sbse0']/div[1]")
-	time.sleep(1.5)
+	sleep(1)
 	first_item.click()
-	time.sleep(1)
+	sleep(1)
 
 def dep_date_chooser(month, day, year):
 	dep_date_button = browser.find_element_by_xpath("""//*[@id='flt-app']
 		/div[2]/main[1]/div[4]/div/div[3]/div/div[2]/div[4]/div[1]/div[2]""")
 	dep_date_button.click()
 	time.sleep(1)
-	dep_date_button = browser.find_element_by_xpath("""//*
-		[@id='flt-modaldialog']/div/div[4]/div[2]/div[1]/date-input/input""")
+	dep_date_button = browser.find_element_by_xpath("""//*[@id="flt-modaldialog"]
+		/div/div[4]/div[2]/div[1]/date-input/input""")
 	dep_date_button.send_keys(Keys.BACKSPACE)
 	dep_date_button.send_keys(month + '/' + day + '/' + year)
+	dep_date_button.send_keys(Keys.RETURN)
+	time.sleep(4)
+	price_els = browser.find_elements_by_css_selector(""".gws-travel-calendar__annotation""")
+	price_els = [el for el in price_els if el.text != ""]
+	sorted(price_els[:30], key=lowestPrice)[0].find_element_by_xpath("..").find_element_by_xpath("..").click()
+	browser.find_element_by_xpath("""//*[@id="flt-modaldialog"]/div/div[5]/g-raised-button/div""").click()
+	sleep(5)
+
+def lowestPrice(price):
+	if price.text == "":
+		return 0
+	else:
+		return int(price.text[1:].replace(",", ""))
+
 
 def return_date_chooser(month, day, year):
 	return_date_button = browser.find_element_by_xpath("""//*
@@ -100,7 +120,7 @@ def search():
 	search = browser.find_element_by_xpath("""//*[@id='flt-modaldialog']/div
 		/div[5]/g-raised-button""")
 	search.click()
-	time.sleep(10)
+	sleep(10)
 	print('Results ready!')
 
 
@@ -133,7 +153,7 @@ browser = webdriver.Chrome(executable_path='chromedriver')
 browser.delete_all_cookies()
 link = 'https://www.google.com/flights?hl=en'
 browser.get(link)
-time.sleep(5)
+time.sleep(1)
 
 # Set params for search
 ticket_chooser(TICKET_TYPE)
@@ -146,22 +166,21 @@ if (TICKET_TYPE == 0):
 	return_date_chooser(ret_date_params[0], ret_date_params[1], 
 		ret_date_params[2])
 
-# Do Search
-search()
-
 # Create new flight object from seach
 flight = Flight(DEP_CITY + " | " + ARR_CITY + " | " + DEP_DATE + " | " 
 	+ RETURN_DATE)
 flight.setDepCity(DEP_CITY)
 flight.setArrCity(ARR_CITY)
+time.sleep(1)
 
 # Set flight object variables
-# Departure time
+# Departure time:
 try:
 	flight.setDep(browser.find_element_by_xpath("""//*[@id="flt-app"]/div[2]/main[4]
 		/div[7]/div[1]/div[13]/div[1]/ol/li[1]/div/div[1]/div[2]/div[1]/div[1]/div[2]
 		/div[1]/div/span[1]/span/span""").text)
-except NoSuchElementException:
+except (NoSuchElementException, StaleElementReferenceException):
+	time.sleep(1)
 	browser.find_element_by_xpath("""//*[@id="flt-app"]/div[2]/main[4]/div[7]
 		/div[2]/div/div[2]/fill-button""").click()
 	time.sleep(1)
@@ -169,8 +188,16 @@ except NoSuchElementException:
 		/div[7]/div[1]/div[13]/div[1]/ol/li[1]/div/div[1]/div[2]/div[1]/div[1]/div[2]
 		/div[1]/div/span[1]/span/span""").text)
 
-# Arrival time
-flight.setArr(browser.find_element_by_xpath("""//*[@id="flt-app"]/div[2]/main[4]
+try:
+	flight.setArr(browser.find_element_by_xpath("""//*[@id="flt-app"]/div[2]/main[4]
+	/div[7]/div[1]/div[13]/div[1]/ol/li[1]/div/div[1]/div[2]/div[1]/div[1]/div[2]
+	/div[1]/div/span[2]/span/span[1]""").text)
+except (NoSuchElementException, StaleElementReferenceException):
+	time.sleep(1)
+	browser.find_element_by_xpath("""//*[@id="flt-app"]/div[2]/main[4]/div[7]
+		/div[2]/div/div[2]/fill-button""").click()
+	time.sleep(1)
+	flight.setArr(browser.find_element_by_xpath("""//*//*[@id="flt-app"]/div[2]/main[4]
 	/div[7]/div[1]/div[13]/div[1]/ol/li[1]/div/div[1]/div[2]/div[1]/div[1]/div[2]
 	/div[1]/div/span[2]/span/span[1]""").text)
 
@@ -211,10 +238,13 @@ msg = flight.create_msg()
 f = open("saved/" + DEP_CITY + "_" + ARR_CITY + "_" + DEP_DATE + ".txt", "w")
 f.write(msg)
 f.close()
+
+# Email
+
 # server = connect_mail(USERNAME,PASSWORD)
 # send_email(msg, server, flight)
 # print('Email sent!')
 
-
+# Delay
 
 # time.sleep(3600)
