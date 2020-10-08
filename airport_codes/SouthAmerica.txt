@@ -1,0 +1,20 @@
+SBCT	CWB	Afonso Pena Airport	Curitiba	Brazil
+SPZO	CUZ	Alejandro Velasco Astete International Airport	Cusco	Peru
+SUMU	MVD	Carrasco International /General C L Berisso Airport	Montevideo	Uruguay
+SCEL	SCL	Comodoro Arturo Merino Benítez International Airport	Santiago	Chile
+SBSP	CGH	São Paulo–Congonhas Airport	São Paulo	Brazil
+SELT	LTX	Cotopaxi International Airport	Latacunga	Ecuador
+SBSV	SSA	Deputado Luiz Eduardo Magalhães International Airport	Salvador	Brazil
+SKBO	BOG	El Dorado International Airport	Bogota	Colombia
+SVBC	BLA	General José Antonio Anzoategui International Airport	Barcelona	Venezuela
+SBSG	NAT	Governador Aluízio Alves International Airport	Natal	Brazil
+SBFL	FLN	Hercílio Luz International Airport	Florianópolis	Brazil
+SPJC	LIM	Jorge Chávez International Airport	Lima	Peru
+SEQM	UIO	Mariscal Sucre International Airport	Quito	Ecuador
+SAEZ	EZE	Ministro Pistarini International Airport	Buenos Aires	Argentina
+SBBR	BSB	Brasília International Airport	Brasília	Brazil
+SBGL	GIG	Galeão International Airport	Rio De Janeiro	Brazil
+SVMI	CCS	Simón Bolívar International Airport	Caracas	Venezuela
+SBCF	CNF	Tancredo Neves International Airport	Belo Horizonte	Brazil
+SBBE	BEL	Val de Cans/Júlio Cezar Ribeiro International Airport	Belém	Brazil
+SLVR	VVI	Viru Viru International Airport	Santa Cruz	Bolivia

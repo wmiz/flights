@@ -1,0 +1,46 @@
+HTZA	ZNZ	Abeid Amani Karume International Airport	Zanzibar	Tanzania
+HAAB	ADD	Addis Ababa Bole International Airport	Addis Ababa	Ethiopia
+DNAI	QUO	Akwa Ibom International Airport	Uyo	Nigeria
+GVAC	SID	Amílcar Cabral International Airport	Espargos	Cape Verde
+GOBD	DSS	Diass-Thies Blaise Diagne International Airport	Dakar	Senegal
+HECA	CAI	Cairo International Airport	Cairo	Egypt
+FACT	CPT	Cape Town International Airport	Cape Town	South Africa
+DRRN	NIM	Diori Hamani International Airport	Niamey	Niger
+DTNH	NBE	Enfidha - Hammamet International Airport	Enfidha	Tunisia
+HUEN	EBB	Entebbe International Airport	Kampala	Uganda
+FAGG	GRJ	George Airport	George	South Africa
+FYWH	WDH	Hosea Kutako International Airport	Windhoek	Namibia
+DAAG	ALG	Algiers Houari Boumediene Airport	Algiers	Algeria
+HEGN	HRG	Hurghada International Airport	Hurghada	Egypt
+FMMI	TNR	Ivato Airport	Antananarivo	Madagascar
+HKJK	NBO	Jomo Kenyatta International Airport	Nairobi	Kenya
+HSSJ	JUB	Juba International Airport	Juba	South Sudan
+HTDA	DAR	Julius Nyerere International Airport	Dar es Salaam	Tanzania
+FLKK	LUN	Kenneth Kaunda International Airport Lusaka	Lusaka	Zambia
+HSSS	KRT	Khartoum International Airport	Khartoum	Sudan
+HRYR	KGL	Kigali International Airport	Kigali	Rwanda
+FALE	DUR	King Shaka International Airport	Durban	South Africa
+DGAA	ACC	Kotoka International Airport	Accra	Ghana
+GOOY	DKR	Léopold Sédar Senghor International Airport	Dakar	Senegal
+GFLL	FNA	Lungi International Airport	Freetown	Sierra Leone
+HELX	LXR	Luxor International Airport	Luxor	Egypt
+DNKN	KAN	Mallam Aminu International Airport	Kano	Nigeria
+FQMA	MPM	Maputo Airport	Maputo	Mozambique
+GABS	BKO	Modibo Keita International Airport	Bamako	Mali
+GMMN	CMN	Mohammed V International Airport	Casablanca	Morocco
+HKMO	MBA	Mombasa Moi International Airport	Mombasa	Kenya
+DNMM	LOS	Murtala Muhammed International Airport	Lagos	Nigeria
+FTTJ	NDJ	N'Djamena International Airport	N'Djamena	Chad
+FZAA	FIH	Ndjili International Airport	Kinshasa	Congo (Kinshasa)
+DNAA	ABV	Nnamdi Azikiwe International Airport	Abuja	Nigeria
+GQNO	NKC	Nouakchott–Oumtounsy International Airport	Nouakchott	Mauritania
+FAOR	JNB	OR Tambo International Airport	Johannesburg	South Africa
+DFFD	OUA	Ouagadougou Airport	Ouagadougou	Burkina Faso
+FNLU	LAD	Quatro de Fevereiro Airport	Luanda	Angola
+FVRG	HRE	Robert Gabriel Mugabe International Airport	Harare	Zimbabwe
+GLRB	ROB	Roberts International Airport	Monrovia	Liberia
+FSIA	SEZ	Seychelles International Airport	Mahe Island	Seychelles
+FIMP	MRU	Sir Seewoosagur Ramgoolam International Airport	Port Louis	Mauritius
+FBSK	GBE	Sir Seretse Khama International Airport	Gaborone	Botswana
+HLLT	TIP	Tripoli International Airport	Tripoli	Libya
+DTTA	TUN	Tunis Carthage International Airport	Tunis	Tunisia
