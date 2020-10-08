@@ -20,6 +20,8 @@ class Flight:
 		self.duration = duration
 	def setStops(self, stops):
 		self.stops = stops
+	def setURL(self, url):
+		self.url = url
 
 	#Getter methods
 	def getName(self):
@@ -36,5 +38,17 @@ class Flight:
 		return self.duration
 	def getStops(self):
 		return self.stops
+	def getURL(self):
+		return self.url
 
-
+	def create_msg(self):
+		msg = """Departure time: {}\nArrival time: {}\nAirline: {}
+		\nFlight duration: {}\nNo. of stops: {}\n
+		Price: {}\nURL: {}\n""".format(self.getDep(),
+			   self.getArr(),
+			   self.getAirline(),
+			   self.getDuration(),
+			   self.getStops(),
+			   self.getPrice(),
+			   self.getURL())
+		return msg
