@@ -154,7 +154,7 @@ KLCK	LCK	Rickenbacker International Airport	Columbus	United States
 KROA	ROA	Roanoke–Blacksburg Regional Airport	Roanoke	United States
 KWRB	WRB	Robins Air Force Base	Warner Robins	United States
 KRST	RST	Rochester International Airport	Rochester	United States
-KDCA	DCA	Ronald Reagan Washington National Airport	Washington	United States
+KDCA	DCA	Ronald Reagan Washington National Airport	Washington	United 
 KSMF	SMF	Sacramento International Airport	Sacramento	United States
 KSLC	SLC	Salt Lake City International Airport	Salt Lake City	United States
 KSAT	SAT	San Antonio International Airport	San Antonio	United States
