@@ -34,6 +34,7 @@ for op in ops:
 #print(setup)
 
 # Load all airports
+print("Loading airports...")
 regions = os.listdir("airport_codes")
 
 airports = []
@@ -56,21 +57,20 @@ for region in regions:
 
 # Check if arguments are valid
 
+print("Checking validity of arguments...")
 places = setup["curr"] + setup["dest"]
+valid = True
 
 for place in places:
 
 	if not checkExists(place, airports):
 		print ("Error: " + place + " is not valid.")
-		quit()
+		valid = False
 	else:
 		print("Found " + place + " successfully!")
 
+if not valid:
+	print("Quitting...")
+	quit()
 
-
-
-
-
-
-
-
+# Run gflights.py with provided arguments
