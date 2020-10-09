@@ -1,6 +1,6 @@
-YPAD	ADL	Adelaide International Airport	Large airport	Adelaide
-YBBN	BNE	Brisbane International Airport	Large airport	Brisbane
-YSCB	CBR	Canberra International Airport	Large airport	Canberra
-YMML	MEL	Melbourne International Airport	Large airport	Melbourne
-YPPH	PER	Perth International Airport	Large airport	Perth
-YSSY	SYD	Sydney Airport	Large airport	Sydney
+YPAD	ADL	Adelaide International Airport	Adelaide	Australia
+YBBN	BNE	Brisbane International Airport	Brisbane	Australia
+YSCB	CBR	Canberra International Airport	Canberra	Australia
+YMML	MEL	Melbourne International Airport	Melbourne	Australia
+YPPH	PER	Perth International Airport	Perth	Australia
+YSSY	SYD	Sydney Airport	Sydney	Australia

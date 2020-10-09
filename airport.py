@@ -3,21 +3,30 @@ class Airport:
 	def __init__(self, code):
 		self.code = code
 
-	def self.setCode(self, code):
+	def setCode(self, code):
 		self.code = code
 
-	def self.setName(self, name):
+	def setName(self, name):
 		self.name = name
 
-	def self.setCountry(self, country):
+	def setCountry(self, country):
 		self.country = country
 
+	def setCity(self, city):
+		self.city = city
 
-	def self.getCode(self):
+
+	def getCode(self):
 		return self.code
 
-	def self.getName(self):
+	def getName(self):
 		return self.name
 
-	def self.getCountry(self):
+	def getCountry(self):
 		return self.country
+
+	def getCity(self):
+		return self.city
+
+	def isMatch(self, string):
+		return self.code.lower() == string.lower() or self.name.lower() == string.lower() or self.country.lower() == string.lower() or self.city.lower() == string.lower()

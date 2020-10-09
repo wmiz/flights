@@ -1,14 +1,23 @@
-# This module will drive the gflights.py module. It will take a number of current
+# This module drives the gflights.py module. It takes a number of current
 # locations and desired destinations and desired months of travel. From this information
-# it will build a spreadsheet of the cheapest available flights
+# it builds a spreadsheet of the cheapest available flights
+
 import sys, re
+import os
+from airport import Airport
+
+
+def checkExists(place, airports):
+	for airport in airports:
+		if airport.isMatch(place):
+			return True
 
 # First parse arguments
 
 if len(sys.argv) == 1:
 	print("""Improper number of arguments! 
 		Command should look like 'python3 gflightsdriver.py --curr city1 city2 
-		etc... --dest region1 region2 etc... --date 01/2021 02/2021 etc...""")
+		etc... --dest region1 country1 city1 etc... --date 01/2021 02/2021 etc...""")
 	quit()
 
 del sys.argv[0]
@@ -22,5 +31,46 @@ for op in ops:
 	op = op.split(" ")
 	setup[op[0]] = op[1:]
 
-print(setup)
+#print(setup)
+
+# Load all airports
+regions = os.listdir("airport_codes")
+
+airports = []
+
+for region in regions:
+	f = open("airport_codes/" + region, "rU")
+	text = f.read()
+
+	# Separate out relevant data
+	airport_data = re.findall(r"\w+\s+(\w+)\s([\w ]+)\s+([\w ]+)\s+([\w ]+)\n", text)
+
+	# Add each to airport list
+	for airport_datum in airport_data:
+		airport = Airport(airport_datum[0])
+		airport.setName(airport_datum[1])
+		airport.setCity(airport_datum[2])
+		airport.setCountry(airport_datum[3])
+
+		airports.append(airport)
+
+# Check if arguments are valid
+
+places = setup["curr"] + setup["dest"]
+
+for place in places:
+
+	if not checkExists(place, airports):
+		print ("Error: " + place + " is not valid.")
+		quit()
+	else:
+		print("Found " + place + " successfully!")
+
+
+
+
+
+
+
+
 
